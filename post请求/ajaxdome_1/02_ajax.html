@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<input type="text" id="uname">
+<input type="password" id="upwd">
+<button onclick="fn()">提交</button>
+<div id="d1"></div>
+<script>
+function fn(){
+	//获取input中输入的值（接收dom对象数据）
+	var u_name=uname.value;
+	var u_pwd=upwd.value;
+		//1.创建异步对象
+	var xhr=new XMLHttpRequest();
+	//console.log(xhr);
+
+	//4.监听接受响应数据
+	xhr.onreadystatechange=function(){
+					if(xhr.readyState==4&&xhr.status==200){
+						var result=xhr.responseText;
+						alert(result);
+						//d1.innnerHTML=result;
+					}
+				}
+	
+	//2.打开链接，接收响应数据
+	//ajax_1是挂载在(app_1.js)的路由，02_ajax.html接收响应的数据是（ajax_1.js）的;
+	xhr.open("post","http://127.0.0.1:8080/ajax_1/login_post",true)
+	//3.发送请求
+	//post的参数是通过请求主体发送的
+	var formdata="uname="+u_name+"&upwd="+u_pwd;
+	//由于ajax传递的内容类型默认是text/plain(普通文本)，
+	//无法传递特殊符号，我们需要改消息头部信息
+	//让ajax可以传递特殊符号
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send(formdata);
+
+	}
+	
+	</script>
+
+	
+</body>
+</html>

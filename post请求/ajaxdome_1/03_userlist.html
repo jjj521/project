@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body onload="getList()">
+<table id="content" border="1px" width="400px">
+	<tr>
+	<th>uid</th>
+	<th>用户名</th>
+	<th>用户密码</th>
+	<th>邮箱</th>
+	</tr>
+</table>
+	<script>
+	function getList(){
+	//1.创建异步对象
+	var xhr=new XMLHttpRequest();
+	//4.监听获取响应
+	xhr.onreadystatechange=function(){
+	if(xhr.readyState==4&&xhr.status==200){
+	var result=xhr.responseText;////得到json串(字符串)
+	//得到响应数据，使用dom，把输入table
+	//json解析
+	var arr=JSON.parse(result);//把json(arr[0])串解析成了js(arr.uaname)对象数组
+	//dom操作,把数据填充到table
+	for (var i=0;i<arr.length ;i++ )
+	{
+	
+	content.innerHTML+=`
+		<tr>
+			<td>${arr[i].uid}</td>//想在模板字符串里加内容就要加${}
+			<td>${arr[i].uname}</td>
+			<td>${arr[i].upwd}</td>
+			<td>${arr[i].email}</td>
+	
+		</tr>
+	`;
+	}
+	//console.log(arr);
+	
+	}
+	}
+	
+	//2.打开连接，创建请求
+	xhr.open("get","http://127.0.0.1:8080/ajax/userlist",true);
+	//3.发送请求
+	xhr.send();
+	}
+			
+	</script>
+</body>
+</html>

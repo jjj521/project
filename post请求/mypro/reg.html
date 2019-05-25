@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>reg</title>
+</head>
+<body>
+	<div>
+		<div>
+			<div>
+				<p>
+				新用户注册
+					<span><a href="#">直接登录</a></span>
+				</p>
+			</div>
+				<div><p>用户名:<input type="text" id="uname">
+				<span>用户名不能为空</span></p>
+				</div>
+				<div><p>登录密码:<input type="possword" id="upwd">
+				<span>密码不能为空</span></p>
+				</div>
+				<div><p>确认密码:<input type="possword" id="pwd"></p>
+				</div>
+				</div>
+				<div><p>邮箱:<input type="text" id="email"></p>
+				</div>
+				</div>
+				<div><p>手机号:<input type="text" id="phone"></p>
+				</div>
+				</div>
+				<div><p><input type="button" value="注册" onclick="reg()"></p>
+				</div>
+		</div>
+	
+	</div>
+	<script>
+		//1.获取用户信息
+		function reg(){
+			var u_name=uname.value;
+			var u_upwd=upwd.value;
+			var u_pwd=pwd.value;
+			var u_email=email.value;
+			var u_phone=phone.value;
+		console.log(111111);
+		//2.创建异步对象
+		var xhr=new XMLHttpRequest();
+		//3.监听响应
+		console.log(22222);
+		 xhr.onreadystatechange=function(){
+		if(xhr.readyState==4&&xhr.status==200)
+			{var result=xhr.responseText;
+			console.log(33333);
+		//提示注册结构及满足注册条件
+		if (result==1&&u_upwd==u_pwd)
+		{alert("注册成功");
+		location.href="http://127.0.0.1:8080/04_list.html";
+		}else{
+		alert("注册失败");
+		}
+		}
+		}
+		//4.创建请求
+		xhr.open("post","http://127.0.0.1:8080/pro/reg",true);
+		//5.发送请求
+		//5.1只有post传递数据,设置头部信息,传递特殊字符
+		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		//5.2创建请求主体
+		formdata="uname="+u_name+"&upwd="+u_upwd+"&email="+u_email+"&phone="+u_phone;
+		xhr.send(formdata);
+        }
+	
+	
+	
+	
+	</script>
+</body>
+</html>
